@@ -1,22 +1,5 @@
 import streamlit as st
 import pandas as pd
-import matplotlib.pyplot as plt
-import matplotlib.font_manager as fm
-import os
-import requests
-
-font_url = "https://github.com/googlefonts/noto-cjk/raw/main/Sans/OTF/Japanese/NotoSansCJK-Regular.otf"
-font_path = "NotoSansCJK-Regular.otf"
-
-if not os.path.exists(font_path):
-    r = requests.get(font_url)
-    with open(font_path, "wb") as f:
-        f.write(r.content)
-
-# ตั้งค่า font ให้ matplotlib ใช้
-fm.fontManager.addfont(font_path)
-plt.rcParams["font.family"] = "Noto Sans CJK JP"
-
 
 st.set_page_config(page_title="小売店舗売上分析", layout="wide")
 
@@ -35,7 +18,6 @@ st.markdown("""
 # ② データ概要
 # ==============================
 st.subheader("② データ概要")
-
 st.markdown("""
 データ出典：  
 Mohammad Talib (Kaggle)  
@@ -83,20 +65,13 @@ filtered_df = df[
 # ==============================
 st.subheader("③ 売上分析")
 
-# ---- 図1 ----
-st.markdown("### 日別売上推移")
+# ---- 図1 日別売上 ----
+st.markdown("### 図1 日別売上推移")
 
 daily_sales = filtered_df.groupby("Date")["Total Amount"].sum()
-
-fig1, ax1 = plt.subplots(figsize=(5,3))
-ax1.plot(daily_sales.index, daily_sales.values)
-ax1.set_xlabel("Date")
-ax1.set_ylabel("Sales (円)")
-ax1.grid(alpha=0.3)
-st.pyplot(fig1)
+st.line_chart(daily_sales)
 
 st.markdown("""
-図1 日別売上推移  
 データ出典：Kaggle Retail Sales Datasetより筆者作成
 """)
 
@@ -109,20 +84,13 @@ st.markdown(f"""
 </p>
 """, unsafe_allow_html=True)
 
-# ---- 図2 ----
-st.markdown("### 商品カテゴリ別売上")
+# ---- 図2 カテゴリ別 ----
+st.markdown("### 図2 商品カテゴリ別売上")
 
 category_sales = filtered_df.groupby("Product Category")["Total Amount"].sum()
-
-fig2, ax2 = plt.subplots(figsize=(5,3))
-ax2.bar(category_sales.index, category_sales.values)
-ax2.set_xlabel("Category")
-ax2.set_ylabel("Sales (円)")
-ax2.grid(alpha=0.3)
-st.pyplot(fig2)
+st.bar_chart(category_sales)
 
 st.markdown("""
-図2 商品カテゴリ別売上  
 データ出典：Kaggle Retail Sales Datasetより筆者作成
 """)
 
@@ -140,20 +108,13 @@ st.markdown(f"""
 # ==============================
 st.subheader("④ 顧客属性分析")
 
-# ---- 図3 ----
-st.markdown("### 性別別売上")
+# ---- 図3 性別 ----
+st.markdown("### 図3 性別別売上")
 
 gender_sales = filtered_df.groupby("Gender")["Total Amount"].sum()
-
-fig3, ax3 = plt.subplots(figsize=(5,3))
-ax3.bar(gender_sales.index, gender_sales.values)
-ax3.set_xlabel("Gender")
-ax3.set_ylabel("Sales (円)")
-ax3.grid(alpha=0.3)
-st.pyplot(fig3)
+st.bar_chart(gender_sales)
 
 st.markdown("""
-図3 性別別売上  
 データ出典：Kaggle Retail Sales Datasetより筆者作成
 """)
 
@@ -166,24 +127,17 @@ st.markdown(f"""
 </p>
 """, unsafe_allow_html=True)
 
-# ---- 図4 ----
-st.markdown("### 年代別売上")
+# ---- 図4 年代別 ----
+st.markdown("### 図4 年代別売上")
 
 bins = [0,20,30,40,50,60,100]
 labels = ["~20","20代","30代","40代","50代","60代以上"]
 filtered_df["Age Group"] = pd.cut(filtered_df["Age"], bins=bins, labels=labels)
 
 age_sales = filtered_df.groupby("Age Group")["Total Amount"].sum()
-
-fig4, ax4 = plt.subplots(figsize=(5,3))
-ax4.bar(age_sales.index.astype(str), age_sales.values)
-ax4.set_xlabel("Age Group")
-ax4.set_ylabel("Sales (円)")
-ax4.grid(alpha=0.3)
-st.pyplot(fig4)
+st.bar_chart(age_sales)
 
 st.markdown("""
-図4 年代別売上  
 データ出典：Kaggle Retail Sales Datasetより筆者作成
 """)
 
