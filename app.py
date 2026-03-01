@@ -1,6 +1,21 @@
 import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
+import matplotlib.font_manager as fm
+import os
+import requests
+
+font_url = "https://github.com/googlefonts/noto-cjk/raw/main/Sans/OTF/Japanese/NotoSansCJK-Regular.otf"
+font_path = "NotoSansCJK-Regular.otf"
+
+if not os.path.exists(font_path):
+    r = requests.get(font_url)
+    with open(font_path, "wb") as f:
+        f.write(r.content)
+
+# ตั้งค่า font ให้ matplotlib ใช้
+fm.fontManager.addfont(font_path)
+plt.rcParams["font.family"] = "Noto Sans CJK JP"
 
 
 st.set_page_config(page_title="小売店舗売上分析", layout="wide")
