@@ -2,7 +2,8 @@ import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
 
-plt.rcParams['font.family'] = 'Meiryo'
+
+plt.rcParams['font.family'] = 'DejaVu Sans'
 st.set_page_config(page_title="小売店舗売上分析", layout="wide")
 
 st.title("小売店舗売上データ分析ダッシュボード")
