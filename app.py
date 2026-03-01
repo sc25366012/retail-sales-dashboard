@@ -76,7 +76,7 @@ total_sales = filtered_df["Total Amount"].sum()
 st.metric("総売上", f"{total_sales:,.0f} 円")
 
 # ---------------- 図1 ----------------
-st.subheader("図1 日別売上推移")
+st.subheader("日別売上推移")
 
 daily_sales = filtered_df.groupby("Date")["Total Amount"].sum().reset_index()
 fig1 = px.line(daily_sales, x="Date", y="Total Amount")
@@ -85,7 +85,7 @@ st.plotly_chart(fig1, use_container_width=True)
 st.caption("図1 日別売上は日ごとに変動しており、一定の増減傾向が確認できる。")
 
 # ---------------- 図2 ----------------
-st.subheader("図2 商品カテゴリ別売上")
+st.subheader("商品カテゴリ別売上")
 
 category_sales = filtered_df.groupby("Product Category")["Total Amount"].sum().reset_index()
 fig2 = px.bar(category_sales, x="Product Category", y="Total Amount", color="Product Category")
@@ -94,7 +94,7 @@ st.plotly_chart(fig2, use_container_width=True)
 st.caption("図2 カテゴリによって売上規模に差があり、特定カテゴリが高い売上を示している。")
 
 # ---------------- 図3 ----------------
-st.subheader("図3 売上構成比")
+st.subheader("売上構成比")
 
 fig3 = px.pie(category_sales, names="Product Category", values="Total Amount")
 st.plotly_chart(fig3, use_container_width=True)
@@ -102,7 +102,7 @@ st.plotly_chart(fig3, use_container_width=True)
 st.caption("図3 売上は一部の主要カテゴリに集中している傾向が見られる。")
 
 # ---------------- 図4 ----------------
-st.subheader("図4 性別別売上")
+st.subheader("性別別売上")
 
 gender_sales = filtered_df.groupby("Gender")["Total Amount"].sum().reset_index()
 fig4 = px.bar(gender_sales, x="Gender", y="Total Amount", color="Gender")
@@ -111,7 +111,7 @@ st.plotly_chart(fig4, use_container_width=True)
 st.caption("図4 性別によって購買金額に差が確認された。")
 
 # ---------------- 図5 ----------------
-st.subheader("図5 年代別売上")
+st.subheader("年代別売上")
 
 bins = [0,20,30,40,50,60,100]
 labels = ["~20","20代","30代","40代","50代","60代以上"]
