@@ -82,7 +82,7 @@ daily_sales = filtered_df.groupby("Date")["Total Amount"].sum().reset_index()
 fig1 = px.line(daily_sales, x="Date", y="Total Amount")
 st.plotly_chart(fig1, use_container_width=True)
 
-st.caption("図1 日別売上は日ごとに変動しており、一定の増減傾向が確認できる。")
+st.caption("グラフ 1 日別売上は日ごとに変動しており、一定の増減傾向が確認できる。")
 
 # ---------------- 図2 ----------------
 st.subheader("商品カテゴリ別売上")
@@ -91,7 +91,7 @@ category_sales = filtered_df.groupby("Product Category")["Total Amount"].sum().r
 fig2 = px.bar(category_sales, x="Product Category", y="Total Amount", color="Product Category")
 st.plotly_chart(fig2, use_container_width=True)
 
-st.caption("図2 カテゴリによって売上規模に差があり、特定カテゴリが高い売上を示している。")
+st.caption("グラフ 2 カテゴリによって売上規模に差があり、特定カテゴリが高い売上を示している。")
 
 # ---------------- 図3 ----------------
 st.subheader("売上構成比")
@@ -99,7 +99,7 @@ st.subheader("売上構成比")
 fig3 = px.pie(category_sales, names="Product Category", values="Total Amount")
 st.plotly_chart(fig3, use_container_width=True)
 
-st.caption("図3 売上は一部の主要カテゴリに集中している傾向が見られる。")
+st.caption("グラフ 3 売上は一部の主要カテゴリに集中している傾向が見られる。")
 
 # ---------------- 図4 ----------------
 st.subheader("性別別売上")
@@ -108,7 +108,7 @@ gender_sales = filtered_df.groupby("Gender")["Total Amount"].sum().reset_index()
 fig4 = px.bar(gender_sales, x="Gender", y="Total Amount", color="Gender")
 st.plotly_chart(fig4, use_container_width=True)
 
-st.caption("図4 性別によって購買金額に差が確認された。")
+st.caption("グラフ 4 性別によって購買金額に差が確認された。")
 
 # ---------------- 図5 ----------------
 st.subheader("年代別売上")
@@ -121,7 +121,7 @@ age_sales = filtered_df.groupby("Age Group")["Total Amount"].sum().reset_index()
 fig5 = px.bar(age_sales, x="Age Group", y="Total Amount", color="Age Group")
 st.plotly_chart(fig5, use_container_width=True)
 
-st.caption("図5 特定の年代層が主要な顧客層である可能性が示唆される。")
+st.caption("グラフ 5 特定の年代層が主要な顧客層である可能性が示唆される。")
 
 # ==============================
 # ⑤ 考察
