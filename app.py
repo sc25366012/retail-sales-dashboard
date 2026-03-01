@@ -111,7 +111,7 @@ st.markdown("""
 データ出典：Kaggle Retail Sales Datasetより筆者作成
 """)
 
-top_category = category_sales.idxmax()
+top_category = category_sales.idxmax() if not category_sales.empty else "N/A"
 
 st.markdown(f"""
 <p style="color:red; font-weight:bold;">
@@ -142,7 +142,7 @@ st.markdown("""
 データ出典：Kaggle Retail Sales Datasetより筆者作成
 """)
 
-top_gender = gender_sales.idxmax()
+top_gender = gender_sales.idxmax() if not gender_sales.empty else "N/A"
 
 st.markdown(f"""
 <p style="color:red; font-weight:bold;">
@@ -172,11 +172,44 @@ st.markdown("""
 データ出典：Kaggle Retail Sales Datasetより筆者作成
 """)
 
-top_age = age_sales.idxmax()
+top_age = age_sales.idxmax() if not age_sales.empty else "N/A"
 
 st.markdown(f"""
 <p style="color:red; font-weight:bold;">
 {top_age} が最も高い売上を記録しており、
 主要顧客層として売上に貢献している。
+</p>
+""", unsafe_allow_html=True)
+
+# ==============================
+# ⑤ 売上傾向まとめ
+# ==============================
+st.subheader("⑤ 売上傾向まとめ")
+
+if not category_sales.empty and not gender_sales.empty and not age_sales.empty:
+    st.markdown(f"""
+    <p style="color:red; font-weight:bold;">
+    分析結果の要約：売上は {top_category} に集中しており、
+    {top_age} が主要顧客層であることが確認された。
+    また、{top_gender} の購買額が比較的高い傾向が見られる。
+    </p>
+    """, unsafe_allow_html=True)
+else:
+    st.markdown("""
+    <p style="color:red; font-weight:bold;">
+    選択条件に該当するデータが存在しません。
+    </p>
+    """, unsafe_allow_html=True)
+
+# ==============================
+# ⑥ 結論
+# ==============================
+st.subheader("⑥ 結論")
+
+st.markdown("""
+<p style="color:red; font-weight:bold;">
+本分析より、売上は特定の商品カテゴリおよび特定の年代層に依存する傾向が確認された。
+今後は時間帯別や季節別の分析を追加することで、
+より詳細な購買傾向の把握が可能になると考えられる。
 </p>
 """, unsafe_allow_html=True)
