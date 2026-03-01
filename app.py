@@ -182,3 +182,62 @@ st.markdown("""
 より詳細な購買傾向の把握が可能になると考えられる。
 </p>
 """, unsafe_allow_html=True)
+
+# ==============================
+# ⑦ 月別売上推移
+# ==============================
+st.subheader("⑦ 月別売上推移")
+
+filtered_df["Month"] = filtered_df["Date"].dt.to_period("M")
+monthly_sales = filtered_df.groupby("Month")["Total Amount"].sum()
+
+st.line_chart(monthly_sales)
+
+if not monthly_sales.empty:
+    best_month = monthly_sales.idxmax()
+    st.markdown(f"""
+    <p style="color:red; font-weight:bold;">
+    月別分析の結果、{best_month} が最も高い売上を記録した。
+    売上には一定の時系列的変動が確認された。
+    </p>
+    """, unsafe_allow_html=True)
+
+    # ==============================
+# ⑧ 売上構成比分析
+# ==============================
+st.subheader("⑧ 売上構成比分析")
+
+if not category_sales.empty:
+    share = category_sales / category_sales.sum() * 100
+    st.bar_chart(share)
+
+    top_share = share.idxmax()
+    top_share_value = share.max()
+
+    st.markdown(f"""
+    <p style="color:red; font-weight:bold;">
+    {top_share} は全体売上の約 {top_share_value:.1f}% を占めており、
+    売上構造において中心的役割を果たしている。
+    </p>
+    """, unsafe_allow_html=True)
+
+    # ==============================
+# ⑨ 商品カテゴリ×性別分析
+# ==============================
+st.subheader("⑨ 商品カテゴリ×性別分析")
+
+cross_analysis = pd.crosstab(
+    filtered_df["Product Category"],
+    filtered_df["Gender"],
+    values=filtered_df["Total Amount"],
+    aggfunc="sum"
+)
+
+st.dataframe(cross_analysis)
+
+st.markdown("""
+<p style="color:red; font-weight:bold;">
+カテゴリ別・性別別の売上構造を確認すると、
+顧客層による購買傾向の違いが存在する可能性が示唆される。
+</p>
+""", unsafe_allow_html=True)
